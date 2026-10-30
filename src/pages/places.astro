@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import ListingCard from '../components/ListingCard.astro';
+import { getCollection } from 'astro:content';
+const listings = await getCollection('listings');
+const types = ['League', 'Show', 'Shop'];
+---
+<Base title="Austin Pokémon leagues, card shows & shops" description="Every Austin-area Pokémon card league night, card show and game shop we've checked, with notes for parents.">
+  <h1>All Austin-area places</h1>
+  <p class="lede">{listings.length} listings, last checked Oct 29, 2026. Times come from each store's site, organizer pages, or the official event locators. Confirm before you drive.</p>
+  <div class="filters" role="group" aria-label="Filter by type">
+    <button type="button" data-t="all" aria-pressed="true">All</button>
+    {types.map((t) => <button type="button" data-t={t} aria-pressed="false">{t}s</button>)}
+  </div>
+  <div class="grid" id="list">{listings.map(({ data, id }) => <ListingCard data={data} id={id} />)}</div>
+  <p class="note" style="margin-top:24px"><b>League</b> means a store that runs regular Pokémon play nights. <b>Show</b> is a one-off weekend event with many vendors. <b>Shop</b> sells cards, and may run events we couldn't confirm.</p>
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+    const cards = document.querySelectorAll<HTMLElement>('#list .card');
+    function apply(t: string) {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.t === t)));
+      cards.forEach((c) => { c.style.display = t === 'all' || c.dataset.type === t ? '' : 'none'; });
+    }
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      const t = b.dataset.t || 'all';
+      apply(t);
+      history.replaceState(null, '', t === 'all' ? location.pathname : `#${t}`);
+    }));
+    const initial = location.hash.slice(1);
+    if (initial && [...buttons].some((b) => b.dataset.t === initial)) apply(initial);
+  </script>
+</Base>

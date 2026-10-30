@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+---
+<Base title="Fair-price guide (coming soon)" description="A fair-price guide for Pokémon cards and packs at Austin shops and shows. Coming soon.">
+  <div class="prose">
+    <h1>Is this a fair price? <span class="chip">coming soon</span></h1>
+    <p class="lede">We're building a simple fair-price guide for parents: what a booster pack, a starter deck, or a popular single usually costs, so you know a good deal from a markup at a shop or show.</p>
+    <p class="note">We won't publish prices until we can source them from real, current sales data. Until then, here's how to check a price yourself.</p>
+    <h2>Check a price in under a minute</h2>
+    <ol>
+      <li><b>Packs and boxes:</b> Compare with big-box store shelf prices for the same product. New sets at local shops often sell near the suggested retail price at launch, and older or popular sets cost more.</li>
+      <li><b>Single cards:</b> Search the exact card name and set number (bottom corner of the card) on a market-price site, and look at <i>recently sold</i> prices, not asking prices.</li>
+      <li><b>Graded cards:</b> The grade changes the price a lot. Compare the same grade from the same grading company.</li>
+      <li><b>At a show:</b> It's normal to ask for "a little off" or a bundle deal. Vendors expect it.</li>
+    </ol>
+  </div>
+  <Signup />
+</Base>

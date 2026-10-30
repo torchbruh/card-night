@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Signup from '../components/Signup.astro';
+import ListingCard from '../components/ListingCard.astro';
+import { getCollection } from 'astro:content';
+const listings = await getCollection('listings');
+const leagues = listings.filter((l) => l.data.type === 'League');
+const shows = listings.filter((l) => l.data.type === 'Show');
+const shops = listings.filter((l) => l.data.type === 'Shop');
+---
+<Base>
+  <section class="hero">
+    <span class="chip">Austin metro · checked Oct 29, 2026</span>
+    <h1>Where Austin kids can play Pokémon cards this week.</h1>
+    <p class="lede">Card Night is a free local guide for parents. It lists league nights, card shows, and game shops around Austin, Round Rock, Cedar Park, Pflugerville and Hutto. Every listing has notes for parents and a link to the place's own page so you can confirm times before you go. We don't make up events or prices.</p>
+    <div class="btns">
+      <a class="btn" href="/places">See all {listings.length} places</a>
+      <a class="btn ghost" href="/parents">New to this? Parent guide</a>
+    </div>
+  </section>
+
+  <div class="features">
+    <div class="card"><h3>{leagues.length} league spots</h3><p>Weekly casual play nights where kids learn, trade, and often get a promo pack. Many cost $5–$12.</p></div>
+    <div class="card"><h3>{shows.length} upcoming shows</h3><p>Weekend card shows from downtown Austin to Belton and Leander, several with free entry.</p></div>
+    <div class="card"><h3>Fake-card tips</h3><p>How to spot counterfeit packs and cards before your kid spends allowance money. <a href="/parents#fakes">Read the checklist →</a></p></div>
+  </div>
+
+  <h2>Weekly league nights</h2>
+  <div class="grid">{leagues.map(({ data, id }) => <ListingCard data={data} id={id} />)}</div>
+
+  <h2>Upcoming card shows</h2>
+  <div class="grid">{shows.map(({ data, id }) => <ListingCard data={data} id={id} />)}</div>
+
+  <h2>Shops worth a visit</h2>
+  <div class="grid">{shops.map(({ data, id }) => <ListingCard data={data} id={id} />)}</div>
+
+  <p class="note" style="margin-top:28px">Schedules change, especially around new set releases and holidays. Always tap "Confirm" to check the place's own page, or call ahead. Spot something wrong? <a href="/contact">Tell us</a>. The official <a href="https://events.pokemon.com/EventLocator/" rel="noopener nofollow" target="_blank">Play! Pokémon event locator</a> is also worth checking.</p>
+
+  <Signup />
+</Base>
