@@ -9,7 +9,8 @@ const shows = listings.filter((l) => l.data.type === 'Show');
 const shops = listings.filter((l) => l.data.type === 'Shop');
 ---
 <Base>
-  <section class="hero">
+  <section class="hero hero-split">
+    <div class="hero-copy">
     <span class="chip">Austin metro · checked Oct 29, 2026</span>
     <h1>Where Austin kids can play Pokémon cards this week.</h1>
     <p class="lede">Card Night is a free local guide for parents. It lists league nights, card shows, and game shops around Austin, Round Rock, Cedar Park, Pflugerville and Hutto. Every listing has notes for parents and a link to the place's own page so you can confirm times before you go. We don't make up events or prices.</p>
@@ -17,6 +18,10 @@ const shops = listings.filter((l) => l.data.type === 'Shop');
       <a class="btn" href="/places">See all {listings.length} places</a>
       <a class="btn ghost" href="/parents">New to this? Parent guide</a>
     </div>
+    </div>
+    <figure class="hero-art">
+      <img src="/images/hero.webp" alt="Illustration of a parent and two kids playing a trading card game at the kitchen table" width="1024" height="576" fetchpriority="high" decoding="async" />
+    </figure>
   </section>
 
   <div class="features">

@@ -2,9 +2,16 @@
 interface Props { data: any; id: string; }
 const { data, id } = Astro.props;
 const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.name + ' ' + data.address)}`;
+const type = data.type.toLowerCase();
+const image = data.image ?? `/images/categories/${type}.webp`;
+const isPhoto = image.startsWith('/images/places/');
 ---
-<article class="card" data-type={data.type} id={id}>
-  <div><span class={`chip t-${data.type.toLowerCase()}`}>{data.type}</span> <span class="chip">{data.area}</span></div>
+<article class="card has-thumb" data-type={data.type} id={id}>
+  <div class={`thumb${isPhoto ? '' : ' illo'}`}>
+    <img src={image} alt={data.imageAlt ?? ''} width="800" height="600" loading="lazy" decoding="async" />
+    {!isPhoto && <span class="thumb-tag">Illustration</span>}
+  </div>
+  <div><span class={`chip t-${type}`}>{data.type}</span> <span class="chip">{data.area}</span></div>
   <h3>{data.name}</h3>
   <div class="meta"><b>When:</b> {data.when}</div>
   <div class="meta"><b>Where:</b> <a href={maps} rel="noopener nofollow" target="_blank">{data.address}</a></div>
