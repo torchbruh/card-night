@@ -15,6 +15,9 @@ const listings = defineCollection({
     source: z.string(),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
+    // Paid Featured spot (sponsored). Leave unset for free listings.
+    featured: z.boolean().optional(),
+    featuredUntil: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   }),
 });
 

@@ -1,17 +1,73 @@
 ---
 import Base from '../layouts/Base.astro';
+import { PRICES, FOUNDING_SPOTS, FOUNDING_LOCK_MONTHS, FEATURED_CAP_PER_CATEGORY, FEATURED_CONTACT, mailto } from '../data/featured';
 ---
-<Base title="For shops & show organizers" description="Run a Pokémon league, card shop or card show near Austin? Get listed on Card Night for free.">
+<Base title="For shops & show organizers" description="Run a Pokémon league, card shop or card show near Austin? Get listed on Card Night for free, or get a clearly labeled Featured spot.">
   <div class="prose">
     <h1>Run a shop, league, or show near Austin?</h1>
-    <p class="lede">Card Night helps Austin families find kid-friendly places to play and buy Pokémon cards. Basic listings are free. We'd love accurate info straight from you.</p>
-    <h2>Free listing</h2>
+    <p class="lede">Card Night helps Austin families find kid-friendly places to play and buy Pokémon cards. Basic listings are free. Featured spots are an optional, clearly labeled way to get seen first.</p>
+
+    <h2>Free listing (always)</h2>
     <ul>
       <li>Add your store, league night, or show, or correct an existing listing.</li>
       <li>Send us your current Pokémon schedule, entry fee, and whether younger kids are welcome.</li>
+      <li>Free listings stay free. You never have to pay to be listed or to get a fix made.</li>
     </ul>
-    <h2>Featured spots (coming later)</h2>
-    <p>Later we plan to offer clearly labeled featured spots on the homepage and in the weekly email, for example to promote a prerelease, League Cup, or show weekend. Featured placement will always be marked as sponsored, and it will never change our parent notes.</p>
-    <p><a class="btn" href="mailto:justintorch@mail.grokbot.com?subject=Card%20Night%20listing">Email us about a listing</a></p>
+    <p><a class="btn ghost" href={mailto('Card Night listing')}>Email us about a free listing</a></p>
+
+    <h2>Featured spots</h2>
+    <p>Want families to see you first? A Featured spot puts your listing at the top and marks it <b>⭐ Featured · Sponsored</b>.</p>
+  </div>
+
+  <div class="price-grid">
+    <div class="card founding">
+      <span class="chip">First {FOUNDING_SPOTS} spots</span>
+      <h3>Founding Featured</h3>
+      <div class="price">${PRICES.founding}<small>/month</small></div>
+      <p>Same as Featured, with the price locked for {FOUNDING_LOCK_MONTHS} months.</p>
+    </div>
+    <div class="card">
+      <span class="chip">Monthly</span>
+      <h3>Featured listing</h3>
+      <div class="price">${PRICES.featured}<small>/month</small></div>
+      <p>Runs 30 days at a time.</p>
+      <ul>
+        <li>Pinned to the top of <a href="/places">/places</a> and your category</li>
+        <li>A homepage slot in “Featured this week”</li>
+        <li>⭐ Featured badge</li>
+        <li>Direct link to your site or event page</li>
+        <li>A callout in the weekly update</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="chip">Fri–Sun</span>
+      <h3>Weekend Show Boost</h3>
+      <div class="price">${PRICES.boost}<small>/weekend</small></div>
+      <p>Made for a card show, prerelease, or League Cup.</p>
+      <ul>
+        <li>Pinned and badged Friday through Sunday</li>
+        <li>Homepage slot that weekend</li>
+        <li>Mention in that week’s update</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p class="note"><b>Limited spots:</b> at most {FEATURED_CAP_PER_CATEGORY} Featured listings per category (Shops, Leagues, Shows) at any time, so Featured stays useful for families. Founding pricing is for the first {FOUNDING_SPOTS} spots only.</p>
+
+    <h2>How to apply</h2>
+    <ol>
+      <li>Email <a href={mailto()}>{FEATURED_CONTACT}</a> with the subject “Card Night Featured.”</li>
+      <li>Tell us your shop, league, or show, which option you want, and your start date.</li>
+      <li>We confirm a spot is open and send a simple invoice (Venmo, PayPal, or invoice). Your spot goes live once it's paid.</li>
+    </ol>
+    <p><a class="btn" href={mailto()}>Apply for a Featured spot</a></p>
+
+    <h2>How we keep it honest</h2>
+    <ul>
+      <li>Featured spots are paid placement and are always labeled “Sponsored.”</li>
+      <li>Paying never changes our parent notes, times, or prices. We write them the same way for every listing.</li>
+      <li>No fake reviews or ratings. We may decline a spot that isn't a good fit for families.</li>
+    </ul>
   </div>
 </Base>
