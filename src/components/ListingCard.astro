@@ -1,15 +1,18 @@
 ---
+import { isFeatured } from '../data/featured';
 interface Props { data: any; id: string; }
 const { data, id } = Astro.props;
 const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.name + ' ' + data.address)}`;
 const type = data.type.toLowerCase();
 const image = data.image ?? `/images/categories/${type}.webp`;
 const isPhoto = image.startsWith('/images/places/');
+const featured = isFeatured(data);
 ---
-<article class="card has-thumb" data-type={data.type} id={id}>
+<article class={`card has-thumb${featured ? ' is-featured' : ''}`} data-type={data.type} data-featured={featured ? 'true' : undefined} id={id}>
   <div class={`thumb${isPhoto ? '' : ' illo'}`}>
     <img src={image} alt={data.imageAlt ?? ''} width="800" height="600" loading="lazy" decoding="async" />
     {!isPhoto && <span class="thumb-tag">Illustration</span>}
+    {featured && <a class="featured-badge" href="/featured" title="Paid Featured spot. Our parent notes are not affected.">⭐ Featured · Sponsored</a>}
   </div>
   <div><span class={`chip t-${type}`}>{data.type}</span> <span class="chip">{data.area}</span></div>
   <h3>{data.name}</h3>

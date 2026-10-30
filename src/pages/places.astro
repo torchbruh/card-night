@@ -2,12 +2,15 @@
 import Base from '../layouts/Base.astro';
 import ListingCard from '../components/ListingCard.astro';
 import { getCollection } from 'astro:content';
-const listings = await getCollection('listings');
+import { pinFeatured, isFeatured } from '../data/featured';
+const listings = pinFeatured(await getCollection('listings'));
+const hasFeatured = listings.some((l) => isFeatured(l.data));
 const types = ['League', 'Show', 'Shop'];
 ---
 <Base title="Austin Pokémon leagues, card shows & shops" description="Every Austin-area Pokémon card league night, card show and game shop we've checked, with notes for parents.">
   <h1>All Austin-area places</h1>
   <p class="lede">{listings.length} listings, last checked Oct 29, 2026. Times come from each store's site, organizer pages, or the official event locators. Confirm before you drive.</p>
+  {hasFeatured && <p class="note">Listings marked <b>⭐ Featured · Sponsored</b> paid to be shown first. Their parent notes are written the same way as every other listing. <a href="/featured">How Featured works</a>.</p>}
   <div class="filters" role="group" aria-label="Filter by type">
     <button type="button" data-t="all" aria-pressed="true">All</button>
     {types.map((t) => <button type="button" data-t={t} aria-pressed="false">{t}s</button>)}

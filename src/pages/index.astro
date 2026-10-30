@@ -3,10 +3,12 @@ import Base from '../layouts/Base.astro';
 import Signup from '../components/Signup.astro';
 import ListingCard from '../components/ListingCard.astro';
 import { getCollection } from 'astro:content';
-const listings = await getCollection('listings');
+import { pinFeatured, isFeatured } from '../data/featured';
+const listings = pinFeatured(await getCollection('listings'));
 const leagues = listings.filter((l) => l.data.type === 'League');
 const shows = listings.filter((l) => l.data.type === 'Show');
 const shops = listings.filter((l) => l.data.type === 'Shop');
+const featuredNow = listings.filter((l) => isFeatured(l.data));
 ---
 <Base>
   <section class="hero hero-split">
@@ -29,6 +31,14 @@ const shops = listings.filter((l) => l.data.type === 'Shop');
     <div class="card"><h3>{shows.length} upcoming shows</h3><p>Weekend card shows from downtown Austin to Belton and Leander, several with free entry.</p></div>
     <div class="card"><h3>Fake-card tips</h3><p>How to spot counterfeit packs and cards before your kid spends allowance money. <a href="/parents#fakes">Read the checklist →</a></p></div>
   </div>
+
+  {featuredNow.length > 0 && (
+    <section class="featured-strip" aria-label="Featured this week (sponsored)">
+      <h2>Featured this week <span class="chip">Sponsored</span></h2>
+      <p class="note">These spots paid for placement. We still list every place for free, and our parent notes don't change. <a href="/featured">How Featured works</a>.</p>
+      <div class="grid">{featuredNow.map(({ data, id }) => <ListingCard data={data} id={`featured-${id}`} />)}</div>
+    </section>
+  )}
 
   <h2>Weekly league nights</h2>
   <div class="grid">{leagues.map(({ data, id }) => <ListingCard data={data} id={id} />)}</div>
