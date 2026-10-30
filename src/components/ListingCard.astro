@@ -1,0 +1,14 @@
+---
+interface Props { data: any; id: string; }
+const { data, id } = Astro.props;
+const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.name + ' ' + data.address)}`;
+---
+<article class="card" data-type={data.type} id={id}>
+  <div><span class={`chip t-${data.type.toLowerCase()}`}>{data.type}</span> <span class="chip">{data.area}</span></div>
+  <h3>{data.name}</h3>
+  <div class="meta"><b>When:</b> {data.when}</div>
+  <div class="meta"><b>Where:</b> <a href={maps} rel="noopener nofollow" target="_blank">{data.address}</a></div>
+  <div class="meta kid"><b>For parents:</b> {data.kids}</div>
+  <p>{data.note}</p>
+  <a class="go" href={data.url} rel="noopener nofollow" target="_blank">Confirm at {data.source} →</a>
+</article>
